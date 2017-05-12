@@ -34,7 +34,9 @@ window.addEventListener('load', () => {
 }, false);
 
 // запускаем клиентские саги
-store.runSaga(rootSagas);
+const task = store.runSaga(rootSagas);
+
+task.done.then(() => console.log('clients task is done'));
 
 if (process.env.NODE_ENV === 'development') {
     window.debug = debug;
