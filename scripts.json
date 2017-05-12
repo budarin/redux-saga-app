@@ -1,0 +1,67 @@
+[
+    {
+        "name": "build:dev",
+        "command": "rimraf ./.build && webpack",
+        "env": {
+            "NODE_ENV": "development"
+        }
+    },
+    {
+        "name": "build",
+        "command": "rimraf ./.build && webpack",
+        "env": {
+            "NODE_ENV": "production"
+        }
+    },
+    {
+        "name": "build:prod",
+        "command": "rimraf ./.build && prun gen-icons && webpack",
+        "env": {
+            "NODE_ENV": "production"
+        }
+    },
+    {
+        "name": "tools__gen-site-icons",
+        "command": "node --harmony src/tools/generateIcons.js",
+        "description": "генерируем иконки и манифесты",
+        "env": {
+            "DEBUG": "tools:generate-app-icons"
+        }
+    },
+    {
+        "name": "start:server-compiling-dev",
+        "command": "webpack --config ./src/config/webpack/server.webpack.config.babel.js",
+        "env": {
+            "NODE_ENV": "development"
+        }
+    },
+    {
+        "name": "start:server-dev",
+        "command": "nodemon -w .build/server/server.js .build/server/server.js",
+        "env": {
+            "NODE_ENV": "development"
+        }
+    },
+    {
+        "name": "server__start:dev",
+        "command": "concurrently --kill-others \"prun start:server-compiling-dev\" \"prun start:server-dev\"",
+        "env": {
+            "NODE_ENV": "development",
+            "DEBUG_COLORS": true,
+            "DEBUG": "webpack* app*"
+        }
+    },
+    {
+        "name": "client__start:dev",
+        "command": "webpack-dev-server --config ./src/config/webpack/client.webpack.config.babel.js",
+        "env": {
+            "NODE_ENV": "development",
+            "DEBUG_COLORS": true,
+            "DEBUG": "app:*"
+        }
+    },
+    {
+        "name": "upgrade",
+        "command": "ncu --upgradeAll & yarn"
+    }
+]

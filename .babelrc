@@ -1,0 +1,16 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "node": "current",
+                "cacheDirectory": true,
+                "loose": true
+            }
+        ]
+    ],
+    "plugins": [
+        "syntax-trailing-function-commas",
+        "transform-flow-strip-types"
+    ]
+}
