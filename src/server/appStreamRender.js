@@ -66,42 +66,51 @@ class View extends Readable {
             <script type="text/javascript" src="${staticUrlPrefix}/client.js" defer></script>
         </head>`);
 
-        log('send header', sagas.done);
+        log('send header');
 
-        Promise.all([sagas.done]).then(async () => {
-            log('start rendering with full store');
+        try {
+            log('sagas.done ', typeof sagas.done);
 
-            // повторный рендер для получения полного интерфейса
-            const appStr = await appRenderer(store);
+            sagas.done.then(async () => {
+                log('start rendering with full store');
 
-            log('2nd render');
+                // повторный рендер для получения полного интерфейса
+                const appStr = await appRenderer(store);
 
-            // получаем состояние стора
-            storeState = store.getState();
+                log('2nd render');
 
-            log('2nd render storeState');
+                // получаем состояние стора
+                storeState = store.getState();
 
-            const bodyHtml = await getBodyHtml({ appStr, storeState });
+                log('2nd render storeState');
 
-            this.push(bodyHtml);
+                const bodyHtml = await getBodyHtml({ appStr, storeState });
 
-            // end the stream
-            this.push(null);
-        })
-            .catch(error => {
-                errorLog('Ошибка: ', error.stack);
-                this.ctx.throw('Server error', 500);
-            })
-            .finally(() => {
+                this.push(bodyHtml);
+
                 // end the stream
                 this.push(null);
+            })
+                .catch(error => {
+                    errorLog('Ошибка: ', error.stack);
+                    this.ctx.throw('Server error', 500);
+                })
+                .finally(() => {
+                    // end the stream
+                    this.push(null);
 
-                // clean ctx
-                this.ctx = undefined;
+                    // clean ctx
+                    this.ctx = undefined;
 
-                log('END REQUEST ---------------------------------------------');
-                store.close();
-            });
+                    log('END REQUEST ---------------------------------------------');
+                    store.close();
+                });
+        } catch (err) {
+            errorLog('Error', err);
+        } finally {
+            this.ctx = undefined;
+        }
+
 
         log('end of render method');
     }
