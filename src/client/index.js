@@ -3,7 +3,6 @@ import debug from 'debug';
 import ReactDOM from 'react-dom';
 
 import App from '../common/containers/App/App.jsx';
-import initialStyles from '../common/assets/css/initial.css';
 import configureStore from '../common/store/index';
 import historyService from '../common/services/clientHistory';
 import removeDOMElementById from '../common/utils/removeDOMElementById';
@@ -22,11 +21,6 @@ const startServices = () => {
 
 window.addEventListener('load', () => {
     startServices();
-
-    if (process.env.NODE_ENV === 'production') {
-        // registering seviceWorker
-        require('serviceworker-webpack-plugin/lib/runtime').register(); // eslint-disable-line global-require
-    }
 }, false);
 
 // запускаем клиентские саги
@@ -45,7 +39,6 @@ if (process.env.NODE_ENV === 'development') {
     const AppContainer = require('react-hot-loader').AppContainer; // eslint-disable-line
 
     const renderAppDev = () => {
-        initialStyles.use();
         ReactDOM.render(
             <AppContainer>
                 <App store={store} />
@@ -85,7 +78,6 @@ if (process.env.NODE_ENV === 'production') {
     };
 
     const renderApp = () => {
-        initialStyles.use();
         ReactDOM.render(<App store={store} />, rootElement, cleanUp);
     };
 

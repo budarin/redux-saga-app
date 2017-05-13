@@ -6,12 +6,10 @@ import HappyPack from 'happypack';
 import BabiliPlugin from 'babili-webpack-plugin';
 import WebpackChunkHash from 'webpack-chunk-hash';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import BundleAnalyzer from 'webpack-bundle-analyzer';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
-import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 
 import clientBabelLoaderConfig from './client.babel.loader.config';
@@ -141,12 +139,6 @@ const clientConfig = ({
                 minifyURLs: true,
             },
         }),
-        new CopyWebpackPlugin([
-            { from: './src/common/assets/browser-icons', to: 'icons' },
-            { from: './src/common/assets/UnsupportedBrowser.html' },
-            { from: './src/common/assets/favicon.ico' },
-            { from: './src/common/assets/manifests' },
-        ]),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['vendor1', 'vendor2', 'manifest'], // vendor libs + extracted manifest
             minChunks: Infinity,
@@ -168,7 +160,6 @@ const clientConfig = ({
                 TARGET: JSON.stringify('CLIENT'),
             },
         }),
-        new ServiceWorkerWebpackPlugin({ entry: path.resolve('./src/sw/sw.js') }),
         new BundleAnalyzer.BundleAnalyzerPlugin({
             analyzerMode: 'static',
             reportFilename: 'stats_report.html',

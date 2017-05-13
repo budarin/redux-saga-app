@@ -3,9 +3,6 @@ import debug from 'debug';
 import webpack from 'webpack';
 import HappyPack from 'happypack';
 import nodeExternals from 'webpack-node-externals';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-// import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
-
 import env from '../../env';
 import serverBabelLoaderConfig from './server.babel.loader.config';
 
@@ -97,13 +94,6 @@ const serverConfig = ({
         new webpack.ProvidePlugin({
             Promise: 'zousan',
         }),
-        new CopyWebpackPlugin([
-            { from: './src/common/assets/UnsupportedBrowser.html' },
-            { from: './src/common/assets/manifests' },
-            { from: './src/common/assets/browser-icons', to: 'icons' },
-            { from: './src/common/assets/favicon.ico' },
-        ]),
-        // new ServiceWorkerWebpackPlugin({ entry: path.resolve('./src/sw/sw.js') }),
     ],
     resolve: {
         extensions: ['.js', '.jsx'],

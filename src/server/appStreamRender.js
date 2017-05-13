@@ -52,10 +52,7 @@ class View extends Readable {
 
         log('store created');
 
-        let sagas;
-        let storeState;
-
-        sagas = store.runSaga(rootSagas);
+        const sagas = store.runSaga(rootSagas);
 
         // первый рендер приложение - для запуска саг для получения данных
         await appRenderer(store);
@@ -63,7 +60,7 @@ class View extends Readable {
         log('1st render');
 
         // получаем состояние стора
-        storeState = store.getState();
+        let storeState = store.getState();
 
         // push the <head> immediately
         this.push(`<!DOCTYPE html>
@@ -75,8 +72,7 @@ class View extends Readable {
 
         log('send header');
 
-
-        Promise.all([sagas.done]).then(async () => {
+        Promise.all([Promise.resolve(true)]).then(async () => {
             log('start rendering with full store');
 
             // повторный рендер для получения полного интерфейса

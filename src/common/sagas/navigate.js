@@ -7,16 +7,16 @@ import getLocationInfo from '../utils/getLocationInfo';
 * преобразует простой url в полный объект для анализа и кладет в стор
 */
 function* watchNavigate() {
-    while (true) {
-        const { payload: { url } } = yield take(START_NAVIGATE_TO);
+    // while (true) {
+    const { payload: { url } } = yield take(START_NAVIGATE_TO);
 
-        yield history.pushState(null, '', url);
+    yield history.pushState(null, '', url);
 
-        yield put({
-            type: NAVIGATE_TO,
-            payload: getLocationInfo(url),
-        });
-    }
+    yield put({
+        type: NAVIGATE_TO,
+        payload: getLocationInfo(url),
+    });
+    // }
 }
 
 export default watchNavigate;

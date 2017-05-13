@@ -110,16 +110,7 @@ const clientConfig = ({
         new webpack.ProvidePlugin({
             Promise: 'zousan',
         }),
-        // заменяем асинхронные вызовы синронными
-        new webpack.NormalModuleReplacementPlugin(/Async.jsx$/, resource => {
-            resource.request = resource.request.replace(/Async.jsx$/, '.jsx');
-            console.log('resource.request', resource.request);
-        }),
         new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
-        // remove serviceWorker from development version
-/*      new ServiceWorkerWebpackPlugin({
-            entry: path.resolve('./src/sw.js')
-        }),*/
     ],
     resolve: {
         extensions: ['.js', '.jsx'],

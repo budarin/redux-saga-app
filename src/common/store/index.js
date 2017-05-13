@@ -44,7 +44,6 @@ const configureStore = (preloadedState = {}) => {  // eslint-disable-line max-st
     };
 
     const cleanUpStore = () => {
-        store.init();
         store = {};
         store.init = undefined;
         store.runSaga = undefined;
