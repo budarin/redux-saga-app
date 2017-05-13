@@ -91,11 +91,6 @@ const serverConfig = ({
             cache: true,
             cacheContext: { env: process.env.NODE_ENV },
         }),
-        // заменяем асинхронные вызовы синронными
-        new webpack.NormalModuleReplacementPlugin(/Async.jsx$/, resource => {
-            resource.request = resource.request.replace(/Async.jsx$/, '.jsx');
-            console.log('resource.request', resource.request);
-        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production'),

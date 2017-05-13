@@ -10,13 +10,8 @@ let systemReducers = {
 };
 
 if (process.env.TARGET === 'SERVER') {
-    const serverDynamicBundles = require('./serverDynamicBundles').default; //eslint-disable-line
-    const serverCriticalCSS = require('./serverCriticalCSS').default; //eslint-disable-line
-
     systemReducers = {
         ...systemReducers,
-        serverDynamicBundles,
-        serverCriticalCSS,
     };
 
     log('systemReducers', Object.keys(systemReducers));

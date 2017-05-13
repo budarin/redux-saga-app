@@ -6,8 +6,6 @@ import App from '../common/containers/App/App.jsx';
 import initialStyles from '../common/assets/css/initial.css';
 import configureStore from '../common/store/index';
 import historyService from '../common/services/clientHistory';
-import deviceInfoService from '../common/services/deviceInfo';
-import windowSizeService from '../common/services/windowSize';
 import removeDOMElementById from '../common/utils/removeDOMElementById';
 import rootSagas from '../common/sagas/index';
 
@@ -20,8 +18,6 @@ const startServices = () => {
     // запускаем мониторинг изменения location, windowSize и ретранслируем его в state
     log('start app services...');
     historyService(store);
-    windowSizeService(store);
-    deviceInfoService(store);
 };
 
 window.addEventListener('load', () => {
