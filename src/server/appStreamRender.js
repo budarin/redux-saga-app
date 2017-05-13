@@ -32,7 +32,6 @@ class View extends Readable {
 
     constructor(context) {
         super();
-
         this.ctx = context;
         this.render();
     }
