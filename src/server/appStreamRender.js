@@ -69,9 +69,9 @@ class View extends Readable {
         log('send header');
 
         try {
-            log('sagas.done ', typeof sagas.done);
+            log('sagas.done ', sagas.done);
 
-            sagas.done.then(async () => {
+            Promise.all([sagas.done]).then(async () => {
                 log('start rendering with full store');
 
                 // повторный рендер для получения полного интерфейса
