@@ -1,34 +1,5 @@
 [
     {
-        "name": "build:dev",
-        "command": "rimraf ./.build && webpack",
-        "env": {
-            "NODE_ENV": "development"
-        }
-    },
-    {
-        "name": "build",
-        "command": "rimraf ./.build && webpack",
-        "env": {
-            "NODE_ENV": "production"
-        }
-    },
-    {
-        "name": "build:prod",
-        "command": "rimraf ./.build && prun gen-icons && webpack",
-        "env": {
-            "NODE_ENV": "production"
-        }
-    },
-    {
-        "name": "tools__gen-site-icons",
-        "command": "node --harmony src/tools/generateIcons.js",
-        "description": "генерируем иконки и манифесты",
-        "env": {
-            "DEBUG": "tools:generate-app-icons"
-        }
-    },
-    {
         "name": "start:server-compiling-dev",
         "command": "webpack --config ./src/config/webpack/server.webpack.config.babel.js",
         "env": {
