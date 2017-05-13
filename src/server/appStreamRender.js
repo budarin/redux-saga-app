@@ -68,48 +68,40 @@ class View extends Readable {
 
         log('send header');
 
-        try {
-            log('sagas.done ', sagas.done);
+        Promise.all([sagas.done]).then(async () => {
+            log('start rendering with full store');
 
-            Promise.all([sagas.done]).then(async () => {
-                log('start rendering with full store');
+            // повторный рендер для получения полного интерфейса
+            const appStr = await appRenderer(store);
 
-                // повторный рендер для получения полного интерфейса
-                const appStr = await appRenderer(store);
+            log('2nd render');
 
-                log('2nd render');
+            // получаем состояние стора
+            storeState = store.getState();
 
-                // получаем состояние стора
-                storeState = store.getState();
+            log('2nd render storeState');
 
-                log('2nd render storeState');
+            const bodyHtml = await getBodyHtml({ appStr, storeState });
 
-                const bodyHtml = await getBodyHtml({ appStr, storeState });
+            this.push(bodyHtml);
 
-                this.push(bodyHtml);
-
+            // end the stream
+            this.push(null);
+        })
+            .catch(error => {
+                errorLog('Ошибка: ', error.stack);
+                this.ctx.throw('Server error', 500);
+            })
+            .finally(() => {
                 // end the stream
                 this.push(null);
-            })
-                .catch(error => {
-                    errorLog('Ошибка: ', error.stack);
-                    this.ctx.throw('Server error', 500);
-                })
-                .finally(() => {
-                    // end the stream
-                    this.push(null);
 
-                    // clean ctx
-                    this.ctx = undefined;
+                // clean ctx
+                this.ctx = undefined;
 
-                    log('END REQUEST ---------------------------------------------');
-                    store.close();
-                });
-        } catch (err) {
-            errorLog('Error', err);
-        } finally {
-            this.ctx = undefined;
-        }
+                log('END REQUEST ---------------------------------------------');
+                store.close();
+            });
 
 
         log('end of render method');
