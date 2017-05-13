@@ -35,9 +35,7 @@ class View extends Readable {
         super();
 
         this.ctx = context;
-
-        // render the view on a different loop
-        co.call(this, this.render).catch(context.onerror);
+        this.render();
     }
 
     _read() {}
@@ -70,9 +68,9 @@ class View extends Readable {
             <script type="text/javascript" src="${staticUrlPrefix}/client.js" defer></script>
         </head>`);
 
-        log('send header');
+        log('send header', sagas.done);
 
-        Promise.all([Promise.resolve(true)]).then(async () => {
+        Promise.all([sagas.done]).then(async () => {
             log('start rendering with full store');
 
             // повторный рендер для получения полного интерфейса
