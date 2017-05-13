@@ -1,5 +1,4 @@
 import { Readable } from 'stream';
-import co from 'co';
 import debug from 'debug';
 import React from 'react';
 import serialize from 'serialize-javascript';
