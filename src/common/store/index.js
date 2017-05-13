@@ -45,14 +45,7 @@ const configureStore = (preloadedState = {}) => {  // eslint-disable-line max-st
 
     const cleanUpStore = () => {
         store = {};
-        store.init = undefined;
-        store.runSaga = undefined;
         store.close = undefined;
-        store.injectReducer = undefined;
-        store.ejectReducer = undefined;
-        store.injectSagas = undefined;
-        store.ejectSagas = undefined;
-        store.getRunningSagas = undefined;
     };
 
     store = createStore(createReducer(), preloadedState, configureMiddleware());
