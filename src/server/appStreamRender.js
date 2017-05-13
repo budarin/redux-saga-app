@@ -2,7 +2,6 @@ import { Readable } from 'stream';
 import co from 'co';
 import debug from 'debug';
 import React from 'react';
-import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 import { renderToString } from 'react-dom/server';
 
@@ -62,10 +61,6 @@ class View extends Readable {
         await appRenderer(store);
 
         log('1st render');
-
-        const head = Helmet.rewind();
-
-        head.defaultTitle = 'Комета';
 
         // получаем состояние стора
         storeState = store.getState();
